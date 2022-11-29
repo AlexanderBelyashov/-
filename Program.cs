@@ -1,56 +1,48 @@
-﻿
-/* ЗАДАЧА:
-Написать программу, которая из имеющегося массива строк формирует массив из строк, 
-длина которых либо меньше либо равна 3 символа. Первоначальный массив можно ввести с клавиатуры, 
-либо задать на старте выполнения алгоритма.
-При решение не рекомендуется пользоваться коллекциями, лучше обойтись исключительно массивами.
+﻿/*Для запуска программы запустите команду через терминал:
+dotnet run 
+
+Далее введите значения через пробел, например:
+"Введите значения через пробел: 2 hello sun 33 world
+
+Пример вывода программы:
+[2, hello, sun, 33, world] -> [2, sun, 33]
 */
 
-//РЕШЕНИЕ 1 (с использованием двух массивов)
-Консоль.Write("Сколько элементов Вы хотите ввести? ");
-Преобразовать  =  размер  int.ToInt32(консоль.ReadLine());
+using System;
+using static System.Console;
 
-строка[] arrayStrings = новая  строка[размер];
-для (int  i = 0; i < size; i++)
-{
-    Консоль.WriteLine($"Введите {i+1}-й элемент: ");
-    Преобразовать = строка элемента .toString(консоль.ReadLine());
-    arrayStrings[i] = элемент;
-}
+Clear();
 
-строка[] arrayFinal = новая  строка[размер];
-3 = len int;
-0 =  pos  int;
+string[] array = AskArray();
+string[] result = FindLessThan(array, 3);
+WriteLine($"[{string.Join(", ", array)}] -> [{string.Join(", ", result)}]");
 
-для (int  j = 0; j < size; j ++)
-{
-    если (arrayStrings[j].Длина <= len)
-    {
-        arrayFinal[pos] = arrayStrings[j];
-        ++pos;
+string[] FindLessThan(string[] input, int n) {
+    string[] output = new string[CountLessThan(input, n)];
+
+    for(int i = 0, j = 0; i < input.Length; i++) {
+        if(input[i].Length <= n) {
+            output[j] = input[i];
+            j++;
+        }
     }
+
+    return output;
 }
 
-Консоль.WriteLine();
-printArray(arrayFinal);
+int CountLessThan(string[] input, int n) {
+    int count = 0;
 
-// РЕШЕНИЕ 2 (с использованием одного массива)
-/* 
-Консоль.Write("Сколько элементов Вы хотите ввести? ");
-размер int = Преобразовать.ToInt32(консоль.ReadLine());
-строка[] arrayStrings = новая строка[размер];
-int len = 3;
-int pos = 0;
-для (int i = 0; i < size; i++)
-{
- Консоль.WriteLine($"Введите {i+1}-й элемент: ");
- строковый элемент = Преобразовать.toString(консоль.ReadLine());
- если (элемент.Длина <= len)
-    {
- arrayStrings[pos] = элемент;
- pos++;
+    for(int i = 0; i < input.Length; i++) {
+        if(input[i].Length <= n) {
+            count++;
+        }
     }
+
+    return count;
 }
-Консоль.WriteLine();
-printArray(arrayStrings);
-*/
+
+string[] AskArray() {
+    Write("Введите значения через пробел: ");
+    return ReadLine().Split(" ");
+}
